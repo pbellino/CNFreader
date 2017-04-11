@@ -55,7 +55,7 @@ As a standalone script:
 As a module:
 
 ```
-    >>> from read_cnf import lee_cnf_file
+    >>> from read_cnf import read_cnf_file
     >>> read_dic = read_cnf_file('name_of_the_file.CNF')
     >>> read_dic['Live time']
 ```
