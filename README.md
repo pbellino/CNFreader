@@ -36,11 +36,11 @@ When used as a module, it returns a dictionary with all the magnitudes read. Dep
 Files
 -----
 
-  *`read_cnf.py`: CNFreader python scrip.
-  *`example_mcs.CNF`: Data file aquired with a multichannel analyzer in MCS mode.
-  *`example_pha.CNF`: Data file aquiered with a multichannel analyzer in PHA mode.
-  *`README.md`: This file
-  *`cnf_file_format.txt`: CNF binary file description. Taken from [cnfconv](https://github.com/messlinger/cnfconv).
+  * `read_cnf.py`: CNFreader python scrip.
+  * `example_mcs.CNF`: Data file aquired with a multichannel analyzer in MCS mode.
+  * `example_pha.CNF`: Data file aquiered with a multichannel analyzer in PHA mode.
+  * `README.md`: This file
+  * `cnf_file_format.txt`: CNF binary file description. Taken from [cnfconv](https://github.com/messlinger/cnfconv).
 
 Examples
 --------
