@@ -43,7 +43,7 @@ Files
   * `./Examples/` : Folder with examples files
     - `example_mcs.CNF`: Data file aquired with a multichannel analyzer in MCS mode.
     - `example_pha.CNF`: Data file aquiered with a multichannel analyzer in PHA mode.
-    - `cs137.CNF`: Exxample file of a $^{137}$Cs gamma spectrum (MCS mode).
+    - `cs137.CNF`: Exxample file of a $^{137}$Cs gamma spectrum (PHA mode).
 
     
 
