@@ -17,6 +17,7 @@ When used as a module, it returns a dictionary with all the magnitudes read. Dep
         Channels data
         Energy unit
         Energy coefficients
+        Shape coefficients
         Left marker
         Total counts
         Number of channels
@@ -37,10 +38,14 @@ Files
 -----
 
   * `read_cnf.py`: CNFreader python scrip.
-  * `example_mcs.CNF`: Data file aquired with a multichannel analyzer in MCS mode.
-  * `example_pha.CNF`: Data file aquiered with a multichannel analyzer in PHA mode.
   * `README.md`: This file
   * `cnf_file_format.txt`: CNF binary file description. Taken from [cnfconv](https://github.com/messlinger/cnfconv).
+  * `./Examples/` : Folder with examples files
+    - `example_mcs.CNF`: Data file aquired with a multichannel analyzer in MCS mode.
+    - `example_pha.CNF`: Data file aquiered with a multichannel analyzer in PHA mode.
+    - `cs137.CNF': Exxample file of a $^{137}$Cs gamma spectrum (MCS mode).
+
+    
 
 Examples
 --------
