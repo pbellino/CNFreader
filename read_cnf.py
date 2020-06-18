@@ -111,6 +111,7 @@ def read_cnf_file(filename,write_output=False):
                 offs_param = sec_loc 
                 read_dic.update(get_energy_calibration(f,offs_param))
                 read_dic.update(get_date_time(f,offs_param))
+                read_dic.update(get_shape_calibration(f,offs_param))
             # String section
             elif sec_id_header==0x00012001:
                 offs_str = sec_loc 
@@ -238,6 +239,25 @@ def get_energy_calibration(f,offs_param):
     
     return out_dic
 
+
+"""Added Shape Calibration Parameters : FWHM=B[0]+B[1]*E^(1/2)  . B[2] and B[3]
+probably tail parameters"""
+
+def get_shape_calibration(f,offs_param):
+    """Read energy calibration coefficients."""
+    
+    offs_calib = offs_param + 0x30 + uint16_at(f, offs_param + 0x22)
+    B = np.empty(4)
+    B[0] = pdp11f_at(f, offs_calib + 0xdc)
+    B[1] = pdp11f_at(f, offs_calib + 0xe0)
+    B[2] = pdp11f_at(f, offs_calib + 0xe4)
+    B[3] = pdp11f_at(f, offs_calib + 0xe8)
+
+
+    out_dic = { 'Shape coefficients': B }
+    
+    return out_dic
+
 def get_channel_data(f,offs_param,offs_chan):
     """Read channel data."""
     
@@ -355,6 +375,12 @@ def write_to_file(filename,dic):
         f.write('# Energy unit: {}\n'.format(dic['Energy unit']))
         f.write('#\n')
         
+        f.write('# Shape calibration coefficients (FWHM = B0 + B1*E^(1/2)  Low Tail= B2 + B3*E)\n')
+        for j,co in enumerate(dic['Shape coefficients']):
+            f.write('#    B{} = {:.6e}\n'.format(j,co))
+        f.write('# Energy unit: {}\n'.format(dic['Energy unit']))
+        f.write('#\n')
+        
         f.write('# Channel data\n')
         f.write('#     n     energy({})     counts     rate(1/s)\n'.format(dic['Energy unit']))
         f.write('#'+50*'-'+'\n')
@@ -364,13 +390,14 @@ def write_to_file(filename,dic):
    
 if __name__ == "__main__":
    
-    # Check if command line argument is given
-    if len(sys.argv) < 2:
-    # Default name if not provided
-        print('No se especificó archivo de entrada\n')
-        quit()
-    else:
-        filename = sys.argv[1]
+    # # Check if command line argument is given
+    # if len(sys.argv) < 2:
+    # # Default name if not provided
+    #     print('No se especificó archivo de entrada\n')
+    #     quit()
+    # else:
+    #     filename = sys.argv[1]
+    filename='cs137.CNF'
     
     c = read_cnf_file(filename,'TRUE') 
 
@@ -390,7 +417,7 @@ if __name__ == "__main__":
     print('\t Counts: {}'.format(chan_data[np.where(chan==inchan)][0]))
     print('\t Energy: {}'.format(energy[np.where(chan==inchan)][0]))
     
-    if False: 
+    if True: 
         import matplotlib.pyplot as plt
         fig1 = plt.figure(1,figsize=(8,8))
     
@@ -401,5 +428,5 @@ if __name__ == "__main__":
  
         plt.show()
 
-    quit()
+    # quit()
     
