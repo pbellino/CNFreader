@@ -55,7 +55,8 @@ def read_cnf_file(filename, write_output=False):
         available,the dictionaries keys may change. Some possible keys are:
         Sample id
         Channels
-        Sample unit
+        Sample units
+        Sample geometry
         Sample name
         Channels data
         Energy unit
@@ -209,7 +210,11 @@ def datetime_at(f, pos):
 def string_at(f, pos, length):
     f.seek(pos)
     # In order to avoid characters with not utf8 encoding
-    return f.read(length).decode('utf8').rstrip('\00').rstrip()
+    try:
+        read_string = f.read(length).decode('utf8').rstrip('\00').rstrip()
+    except UnicodeDecodeError:
+        read_string = "READ ERROR"
+    return read_string
 
 ###########################################################
 # Definitions for locating and reading data inside the file
@@ -223,7 +228,8 @@ def get_strings(f, offs_str):
     sample_id = string_at(f, offs_str + 0x0070, 0x10)
     # sample_id   = string_at(f, offs_str + 0x0070, 0x40)
     sample_type = string_at(f, offs_str + 0x00b0, 0x10)
-    sample_unit = string_at(f, offs_str + 0x00c4, 0x40)
+    sample_units = string_at(f, offs_str + 0x00c4, 0x10)
+    sample_geometry = string_at(f, offs_str + 0x00d4, 0x10)
     user_name = string_at(f, offs_str + 0x02d6, 0x18)
     sample_desc = string_at(f, offs_str + 0x036e, 0x100)
 
@@ -231,7 +237,8 @@ def get_strings(f, offs_str):
                'Sample name': sample_name,
                'Sample id': sample_id,
                'Sample type': sample_type,
-               'Sample unit': sample_unit,
+               'Sample units': sample_units,
+               'Sample geometry': sample_geometry,
                'User name': user_name,
                'Sample description': sample_desc
               }
